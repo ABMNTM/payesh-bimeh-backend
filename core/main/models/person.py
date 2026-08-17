@@ -124,12 +124,6 @@ class Person(models.Model):
         verbose_name_plural = "افراد"
 
         constraints = [
-            # هر خانواده حداکثر یک سرپرست دارد.
-            models.UniqueConstraint(
-                fields=["family"],
-                condition=Q(is_household_head=True),
-                name="one_household_head_per_family",
-            ),
             # یک فرد یا سرپرست خانوار است یا زیرمجموعه یک خانوار
             models.CheckConstraint(
                 condition=(
@@ -142,7 +136,6 @@ class Person(models.Model):
 
         indexes = [
             models.Index(fields=["last_name", "first_name"]),
-            models.Index(fields=["employment_type"]),
         ]
 
     def __str__(self):
