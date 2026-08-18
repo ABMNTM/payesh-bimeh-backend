@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 from core.main.api.serializers.person import CoveredMemberSerializer
 from core.main.models.cost_rate_rule import CostRateRule
+from core.main.models.current_insurance_contract import CurrentInsuranceContract
 from main.models import Enrollment
 from main.api.serializers.insurance_contract import InsuranceContractSerializer
 
@@ -53,7 +54,5 @@ class CreateEnrollmentSerializer(serializers.ModelSerializer):
         }
 
     def get_total_cost(self, obj: Enrollment):
-        cost_rules = CostRateRule.objects.filter().values("")
-        # for rule in CostRateRule.objects.filter
-        for person in obj.covered_members.all():
-            pass
+        total_cost = CurrentInsuranceContract.calculate_total_cost(obj)
+        return total_cost
