@@ -37,7 +37,6 @@ class FamilyRelationship(models.Model):
                 fields=[
                     "person",
                     "related_person",
-                    "relationship_type",
                 ],
                 name="unique_family_relationship",
             ),

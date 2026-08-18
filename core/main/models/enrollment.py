@@ -7,6 +7,7 @@ class Enrollment(models.Model):
     status = models.CharField(
         max_length=1,
         choices=EnrollmentStatus.choices,
+        default=EnrollmentStatus.DRAFT,
         verbose_name="وضعیت",
     )
 
