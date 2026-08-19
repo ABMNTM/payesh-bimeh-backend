@@ -22,7 +22,6 @@ class SubsidyRateType(models.TextChoices):
 
 
 class EnrollmentStatus(models.TextChoices):
-    DRAFT = "D", "پیش نویس"
     PENDING = "P", "در انتظار پرداخت"
     SUBMITTED = "S", "ارسال شده"
     CONFIRMED = "C", "تایید شده"

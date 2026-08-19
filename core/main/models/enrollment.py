@@ -7,7 +7,7 @@ class Enrollment(models.Model):
     status = models.CharField(
         max_length=1,
         choices=EnrollmentStatus.choices,
-        default=EnrollmentStatus.DRAFT,
+        default=EnrollmentStatus.PENDING,
         verbose_name="وضعیت",
     )
 
@@ -25,20 +25,11 @@ class Enrollment(models.Model):
         verbose_name="قرارداد بیمه سالانه",
     )
 
-    terms_accepted = models.BooleanField(
-        default=False,
-        verbose_name="تایید مطالعه قرارداد",
-    )
-
-    terms_accepted_at = models.DateTimeField(
-        null=True,
-        blank=True,
-        verbose_name="زمان تایید قرارداد",
-    )
-
     covered_members = models.ManyToManyField(
         "main.Person", related_name="enrollments", verbose_name="افراد تحت پوشش"
     )
+
+    enrolled_at = models.DateTimeField(auto_now_add=True, verbose_name="زمان ثبت نام")
 
     class Meta:
         verbose_name = "ثبت نام سالانه سرپرست"
