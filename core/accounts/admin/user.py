@@ -17,20 +17,16 @@ class UserAdmin(BaseUserAdmin):
     # ------------------------------------------------------------------
 
     list_display = (
-        "username",
         "person_display",
         "personnel_code",
-        "employment_type",
+        "employment_type__title",
         "employment_status",
         "is_active",
         "is_staff",
         "last_login",
     )
 
-    list_display_links = (
-        "username",
-        "person_display",
-    )
+    list_display_links = ("person_display",)
 
     list_filter = (
         "employment_type",
@@ -41,7 +37,6 @@ class UserAdmin(BaseUserAdmin):
     )
 
     search_fields = (
-        "username",
         "email",
         "person__first_name",
         "person__last_name",
@@ -73,7 +68,7 @@ class UserAdmin(BaseUserAdmin):
             "اطلاعات حساب کاربری",
             {
                 "fields": (
-                    "username",
+                    "personnel_code",
                     "password",
                 ),
             },
@@ -92,7 +87,6 @@ class UserAdmin(BaseUserAdmin):
             {
                 "fields": (
                     "employment_type",
-                    "personnel_code",
                     (
                         "employment_start_date",
                         "employment_end_date",
@@ -134,7 +128,8 @@ class UserAdmin(BaseUserAdmin):
             {
                 "classes": ("wide",),
                 "fields": (
-                    "username",
+                    "personnel_code",
+                    "employment_type",
                     "password1",
                     "password2",
                 ),
@@ -211,4 +206,4 @@ class UserAdmin(BaseUserAdmin):
     # ------------------------------------------------------------------
 
     def get_queryset(self, request):
-        return super().get_queryset(request).select_related("person")
+        return super().get_queryset(request).select_related("person", "employment_type")

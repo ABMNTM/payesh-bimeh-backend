@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-from accounts.types import EmploymentType
 from main.types import SubsidyRateType
 
 
@@ -13,9 +12,9 @@ class CostRateRule(models.Model):
         verbose_name="قرارداد بیمه سالانه",
     )
 
-    employment_type = models.CharField(
-        max_length=1,
-        choices=EmploymentType.choices,
+    employment_type = models.ForeignKey(
+        "main.EmploymentType",
+        models.CASCADE,
         verbose_name="نوع استخدام",
     )
 

@@ -13,5 +13,4 @@ class EnrollmentAdmin(admin.ModelAdmin):
         "status",
         "guardian",
         "contract",
-        "terms_accepted_at",
     )

@@ -2,7 +2,7 @@ from rest_framework.viewsets import mixins
 from rest_framework.permissions import IsAuthenticated
 from common.utils.views import CustomGenericViewSet
 
-from core.main.api.serializers.enrollment import (
+from main.api.serializers.enrollment import (
     ListEnrollmentSerializer,
     RetrieveEnrollmentSerializer,
     CreateEnrollmentSerializer,

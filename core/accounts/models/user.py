@@ -2,10 +2,15 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 
-from accounts.types import EmploymentType
+from accounts.managers import UserManager
 
 
 class User(AbstractUser):
+    username = None
+    first_name = None
+    last_name = None
+    USERNAME_FIELD = "personnel_code"
+
     person = models.OneToOneField(
         "main.Person",
         models.SET_NULL,
@@ -14,15 +19,16 @@ class User(AbstractUser):
         related_name="user",
     )
 
-    employment_type = models.CharField(
-        max_length=1,
-        choices=EmploymentType.choices,
+    employment_type = models.ForeignKey(
+        "main.EmploymentType",
+        models.CASCADE,
+        related_name="hired_users",
         verbose_name="نوع استخدام",
     )
 
     personnel_code = models.CharField(
         max_length=50,
-        blank=True,
+        unique=True,
         verbose_name="شماره پرسنلی",
     )
 
@@ -37,6 +43,8 @@ class User(AbstractUser):
         blank=True,
         verbose_name="تاریخ پایان کار",
     )
+
+    objects = UserManager()
 
     def clean(self):
         errors = {}

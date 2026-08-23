@@ -1,11 +1,10 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
-from core.accounts.types import EmploymentType
-from core.main.models.cost_rate_rule import CostRateRule
-from core.main.models.enrollment import Enrollment
-from core.main.models.family_relationship import FamilyRelationship
-from core.main.types import RelationshipType, SubsidyRateType
+from main.models.cost_rate_rule import CostRateRule
+from main.models.enrollment import Enrollment
+from main.models.family_relationship import FamilyRelationship
+from main.types import SubsidyRateType
 
 
 class CurrentInsuranceContract(models.Model):
