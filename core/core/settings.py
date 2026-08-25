@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_bootstrap5",
-    "corsheaders",
-    "rest_framework",
+    "jalali_date",
     "accounts",
     "main",
     "financial",
@@ -65,7 +64,9 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            BASE_DIR / "templates",
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -78,6 +79,27 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "core.wsgi.application"
+
+
+# jalali date default settings
+JALALI_DATE_DEFAULTS = {
+    # if change it to true then all dates of the list_display will convert to the Jalali.
+    "LIST_DISPLAY_AUTO_CONVERT": True,
+    "Strftime": {
+        "date": "%y/%m/%d",
+        "datetime": "%H:%M:%S _ %y/%m/%d",
+    },
+    "Static": {
+        "js": [
+            "admin/js/django_jalali.min.js",
+        ],
+        "css": {
+            "all": [
+                "admin/css/django_jalali.min.css",
+            ]
+        },
+    },
+}
 
 
 # Database

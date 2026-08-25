@@ -1,8 +1,20 @@
 from django.views import View
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
 
 
 class LoginView(View):
     def get(self, request):
-        pass
+        return render(request, "login.html")
+
     def post(self, request):
-        pass
+        personnel_code = request.POST.get("personnel_code")
+        password = request.POST.get("password")
+        user = authenticate(request, personnel_code=personnel_code, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("/dashboard")
+        else:
+            messages.error(request, "کد پرسنلی یا رمز عبور نادرست است.")
+            return render(request, "login.html")

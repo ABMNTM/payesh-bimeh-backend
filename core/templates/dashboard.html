@@ -1,0 +1,30 @@
+{% load jalali_tags %}
+
+{% extends "base_dashboard.html" %}
+
+{% block title %}صفحه اصلی{% endblock title %}
+
+{% block dashboard_content %}
+<div class="col-10">
+    {% if enrollments %}
+    <div class="d-flex flex-column align-items-center">
+        {% for enrollment in enrollments %}
+        <div class="d-flex flex-column align-items-stretch card">
+            <p>قرارداد بیمه ({{ enrollment.contract.contract_year }})</p>
+            <p>شرکت متولی: {{ enrollment.contract.insurer_year }}</p>
+            <div class="d-flex flex-row align-items-between">
+                <p>تاریخ شروع پوشش: {{ enrollment.start_date|to_jalali:'%y/%m/%d' }}</p>
+                <p>تاریخ پایان پوشش: {{ enrollment.end_date|to_jalali:'%y/%m/%d' }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="alert alert-warning text-center">
+            شما تا کنون ثبت نامی نداشته اید!
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock dashboard_content %}

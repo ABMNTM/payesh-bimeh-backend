@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+    {% comment %}header of site{% endcomment %}
+<div class="container m-0 p-0" style="height: 100vh; max-width: 99vw;" dir="rtl">
+    <div class="row align-items-center justify-content-between">
+        <nav class="col-2 navbar bg-light vh-100 top-0 end-0 p-0">
+            <div class="container-fluid p-0 d-flex flex-column h-100">
+                <!-- هدر -->
+                <div class="p-3 border-bottom w-100 text-center">
+                    <h5 class="mb-0">
+                        <i class="bi bi-person-circle"></i> پنل کاربری پایش بیمه
+                    </h5>
+                </div>
+
+                <!-- منوها -->
+                <div class="p-3 flex-grow-1 w-100">
+                    <ul class="nav flex-column gap-2" style="padding: 0 20px 0 20px;">
+                        <li class="nav-item">{% if request.path == "/dashboard/" %}{% else %}{% endif %}
+                            <a class="nav-link {% if request.path == "/dashboard/" %}bg-primary text-white{% else %}text-dark{% endif %} rounded" href="{% url 'dashboard' %}">
+                                <i class="bi bi-house"></i> خانه
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == "/register/" %}bg-primary text-white{% else %}text-dark{% endif %} rounded" href="#">
+                                <i class="bi bi-person-plus"></i> ثبت نام اصلی
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == "/transactions/" %}bg-primary text-white{% else %}text-dark{% endif %} rounded" href="#">
+                                <i class="bi bi-arrow-left-right"></i> تراکنش ها
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == "/persons/" %}bg-primary text-white{% else %}text-dark{% endif %} rounded" href="#">
+                                <i class="bi bi-people"></i> افراد تحت تکفل
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- فوتر -->
+                <div class="p-3 border-top w-100">
+                    <a class="nav-link text-danger rounded active" href="{% url 'logout' %}">
+                        <i class="bi bi-box-arrow-left"></i> خروج
+                    </a>
+                </div>
+            </div>
+        </nav>
+        {% block dashboard_content %}{% endblock dashboard_content %}
+    </div>
+</div>
+{% endblock content %}
