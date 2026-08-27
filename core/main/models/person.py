@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.db.models import Q
+from django_jalali.db import models as jmodels
 
 from main.types import Gender
 
@@ -44,7 +45,7 @@ class Person(models.Model):
         verbose_name="نام مادر",
     )
 
-    birth_date = models.DateField(
+    birth_date = jmodels.jDateField(
         null=True,
         blank=True,
         verbose_name="تاریخ تولد",
@@ -116,8 +117,8 @@ class Person(models.Model):
     # تاریخچه ثبت
     # ------------------------------------------------------------------
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = jmodels.jDateTimeField(auto_now_add=True)
+    updated_at = jmodels.jDateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = "فرد"

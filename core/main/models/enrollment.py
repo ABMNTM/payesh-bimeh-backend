@@ -1,4 +1,5 @@
 from django.db import models
+from django_jalali.db import models as jmodels
 
 from main.types import EnrollmentStatus
 
@@ -29,7 +30,7 @@ class Enrollment(models.Model):
         "main.Person", related_name="enrollments", verbose_name="افراد تحت پوشش"
     )
 
-    enrolled_at = models.DateTimeField(auto_now_add=True, verbose_name="زمان ثبت نام")
+    enrolled_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name="زمان ثبت نام")
 
     class Meta:
         verbose_name = "ثبت نام سالانه سرپرست"

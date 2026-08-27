@@ -1,4 +1,5 @@
 from django.db import models
+from django_jalali.db import models as jmodels
 
 
 class InsuranceContract(models.Model):
@@ -16,20 +17,20 @@ class InsuranceContract(models.Model):
         verbose_name="فایل قرارداد بیمه",
     )
 
-    start_date = models.DateField(
+    start_date = jmodels.jDateField(
         verbose_name="تاریخ شروع پوشش",
     )
 
-    end_date = models.DateField(
+    end_date = jmodels.jDateField(
         verbose_name="تاریخ پایان پوشش",
     )
 
-    created_at = models.DateTimeField(
+    created_at = jmodels.jDateTimeField(
         auto_now_add=True,
         verbose_name="تاریخ ایجاد",
     )
 
-    updated_at = models.DateTimeField(
+    updated_at = jmodels.jDateTimeField(
         auto_now=True,
         verbose_name="تاریخ آخرین ویرایش",
     )

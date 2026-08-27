@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
+from django_jalali.db import models as jmodels
 
 from accounts.managers import UserManager
 
@@ -32,13 +33,13 @@ class User(AbstractUser):
         verbose_name="شماره پرسنلی",
     )
 
-    employment_start_date = models.DateField(
+    employment_start_date = jmodels.jDateField(
         null=True,
         blank=True,
         verbose_name="تاریخ شروع به کار",
     )
 
-    employment_end_date = models.DateField(
+    employment_end_date = jmodels.jDateField(
         null=True,
         blank=True,
         verbose_name="تاریخ پایان کار",

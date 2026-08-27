@@ -1,28 +1,32 @@
 {% extends "base_dashboard.html" %}
 
-{% load jalali_tags %}
+{% load jformat %}
 
 {% block title %}صفحه اصلی{% endblock title %}
 
 {% block dashboard_content %}
 <div class="col-10">
     {% if enrollments %}
-    <div class="d-flex flex-column align-items-center">
+    <div class="row justify-content-center">
         {% for enrollment in enrollments %}
-        <div class="d-flex flex-column align-items-stretch card">
-            <p>قرارداد بیمه ({{ enrollment.contract.contract_year }})</p>
-            <p>شرکت متولی: {{ enrollment.contract.insurer_year }}</p>
-            <div class="d-flex flex-row align-items-between">
-                <p>تاریخ شروع پوشش: {{ enrollment.start_date|to_jalali:'%y/%m/%d' }}</p>
-                <p>تاریخ پایان پوشش: {{ enrollment.end_date|to_jalali:'%y/%m/%d' }}</p>
+        <div class="d-flex flex-column align-items-stretch card col-3 m-1 border-dark">
+            <div class="card-body">
+                <p>قرارداد بیمه ({{ enrollment.contract.contract_year }})</p>
+                <p>شرکت متولی: {{ enrollment.contract.insurer_company }}</p>
+                <div class="d-flex flex-column align-items-between gap-1">
+                    <p class="p-1 mb-1 border border-success rounded">تاریخ شروع پوشش: {{ enrollment.contract.start_date|jformat:'%Y/%m/%d' }}</p>
+                    <p class="p-1 mb-0 border border-danger rounded">تاریخ پایان پوشش: {{ enrollment.contract.end_date|jformat:'%Y/%m/%d' }}</p>
+                </div>
             </div>
         </div>
         {% endfor %}
     </div>
     {% else %}
     <div class="d-flex justify-content-center align-items-center">
-        <div class="alert alert-warning text-center">
+        <div class="alert alert-info text-center">
             شما تا کنون ثبت نامی نداشته اید!
+            <br>
+            با گزینه <span class="badge text-bg-primary">ثبت نام اصلی</span> اولین درخواست بیمه خود را ثبت کنید
         </div>
     </div>
     {% endif %}

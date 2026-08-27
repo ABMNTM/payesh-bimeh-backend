@@ -1,4 +1,5 @@
 from django.db import models
+from django_jalali.db import models as jmodels
 
 from financial.models.payment import Payment
 
@@ -32,9 +33,9 @@ class Transaction(models.Model):
         default=False, verbose_name="موفقیت آمیز؟"
     )
 
-    paid_at = models.DateTimeField(null=True, blank=True, verbose_name="تاریخ پرداخت")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="زمان ساخت")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="زمان بروزرسانی")
+    paid_at = jmodels.jDateTimeField(null=True, blank=True, verbose_name="تاریخ پرداخت")
+    created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name="زمان ساخت")
+    updated_at = jmodels.jDateTimeField(auto_now=True, verbose_name="زمان بروزرسانی")
 
     def __str__(self):
         return self.authority

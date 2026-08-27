@@ -3,4 +3,4 @@ djangorestframework==3.18.0
 djangorestframework-simplejwt==5.5.1
 django-bootstrap5==26.2
 django-cors-headers==4.9.0
-django-jalali-date==2.0.0
+django_jalali==7.4.0

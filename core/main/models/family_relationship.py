@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Q
 from django.core.exceptions import ValidationError
+from django_jalali.db import models as jmodels
 
 from main.types import Gender, RelationshipType
 
@@ -26,7 +27,7 @@ class FamilyRelationship(models.Model):
         verbose_name="نوع رابطه",
     )
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = jmodels.jDateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = "رابطه خانوادگی"
