@@ -31,7 +31,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == "/persons/" %}bg-primary text-white{% else %}text-dark{% endif %} rounded" href="#">
+                            <a class="nav-link {% if request.path == "/persons/" %}bg-primary text-white{% else %}text-dark{% endif %} rounded" href="{% url 'persons' %}">
                                 <i class="bi bi-people"></i> افراد تحت تکفل
                             </a>
                         </li>
@@ -46,7 +46,9 @@
                 </div>
             </div>
         </nav>
-        {% block dashboard_content %}{% endblock dashboard_content %}
+        <div class="col-10">
+            {% block dashboard_content %}{% endblock dashboard_content %}
+        </div>
     </div>
 </div>
 {% endblock content %}

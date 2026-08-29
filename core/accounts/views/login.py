@@ -6,7 +6,9 @@ from django.contrib.auth import login, authenticate
 
 class LoginView(View):
     def get(self, request):
-        return render(request, "login.html")
+        if self.request.user.is_authenticated:
+            return redirect("/dashboard")
+        return render(request, "pages/login.html")
 
     def post(self, request):
         personnel_code = request.POST.get("personnel_code")
@@ -17,4 +19,4 @@ class LoginView(View):
             return redirect("/dashboard")
         else:
             messages.error(request, "کد پرسنلی یا رمز عبور نادرست است.")
-            return render(request, "login.html")
+            return render(request, "pages/login.html")

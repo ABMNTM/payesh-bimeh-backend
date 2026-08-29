@@ -1,0 +1,32 @@
+{% extends "base_nav.html" %}
+
+{% load jformat %}
+
+{% block title %}صفحه اصلی{% endblock title %}
+
+{% block dashboard_content %}
+{% if enrollments %}
+<div class="row justify-content-center">
+    {% for enrollment in enrollments %}
+    <div class="d-flex flex-column align-items-stretch card col-3 m-1 border-dark">
+        <div class="card-body">
+            <p>قرارداد بیمه ({{ enrollment.contract.contract_year }})</p>
+            <p>شرکت متولی: {{ enrollment.contract.insurer_company }}</p>
+            <div class="d-flex flex-column align-items-between gap-1">
+                <p class="p-1 mb-1 border border-success rounded">تاریخ شروع پوشش: {{ enrollment.contract.start_date|jformat:'%Y/%m/%d' }}</p>
+                <p class="p-1 mb-0 border border-danger rounded">تاریخ پایان پوشش: {{ enrollment.contract.end_date|jformat:'%Y/%m/%d' }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="d-flex justify-content-center align-items-center">
+    <div class="alert alert-info text-center">
+        شما تا کنون ثبت نامی نداشته اید!
+        <br>
+        با گزینه <span class="badge text-bg-primary">ثبت نام اصلی</span> اولین درخواست بیمه خود را ثبت کنید
+    </div>
+</div>
+{% endif %}
+{% endblock dashboard_content %}
