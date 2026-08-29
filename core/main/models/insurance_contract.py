@@ -1,6 +1,8 @@
 from django.db import models
 from django_jalali.db import models as jmodels
 
+from core.storage import MediaStorage
+
 
 class InsuranceContract(models.Model):
     contract_year = models.PositiveSmallIntegerField(
@@ -13,6 +15,7 @@ class InsuranceContract(models.Model):
     )
 
     terms_file = models.FileField(
+        storage=MediaStorage,
         upload_to="contracts/",
         verbose_name="فایل قرارداد بیمه",
     )

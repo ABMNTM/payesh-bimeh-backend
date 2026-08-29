@@ -1,6 +1,9 @@
+boto3==1.43.81
 django==5.2.4
 djangorestframework==3.18.0
 djangorestframework-simplejwt==5.5.1
 django-bootstrap5==26.2
 django-cors-headers==4.9.0
 django_jalali==7.4.0
+django-storages==1.14.6
+python-decouple==3.8

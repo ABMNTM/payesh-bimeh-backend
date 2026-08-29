@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+from botocore.config import Config as AWSConfig
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,15 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-6r1e8bd412^ys87_6gl_5juyia=6la+@yh3isswe*#4aggxm8c"
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", default=True, cast=bool)
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", default=[])
 CORS_ALLOW_ALL_ORIGINS = False
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default=["localhost"])
 AUTH_USER_MODEL = "accounts.User"
 
 
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_bootstrap5",
     "django_jalali",
+    "storages",
     "accounts",
     "main",
     "financial",
@@ -80,6 +83,29 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "core.wsgi.application"
 
+# S3
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+AWS_STATIC_BUCKET_NAME = config("AWS_STATIC_BUCKET_NAME")
+AWS_S3_STORAGE_URL = "https://s3.ir-thr-at1.arvanstorage.ir"
+AWS_S3_REGION_NAME = "ir-thr-at1"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "core.storage.MediaStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "core.storage.StaticStorage",
+    },
+}
+
+AWS_S3_CLIENT_CONFIG = AWSConfig(
+    connect_timeout=10, read_timeout=30, retries={"max_attempts": 3}
+)
+
+STATIC_URL = f"{AWS_STATIC_BUCKET_NAME}.{AWS_S3_STORAGE_URL}/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # django jalali default settings
 JALALI_SETTINGS = {
@@ -104,13 +130,13 @@ JALALI_SETTINGS = {
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+SQLITE_PATH = config("SQLITE_PATH", cast=str)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": BASE_DIR / SQLITE_PATH,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -134,19 +160,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "fa-ir"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Tehran"
 
 USE_I18N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
