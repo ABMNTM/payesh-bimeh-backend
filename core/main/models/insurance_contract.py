@@ -20,12 +20,28 @@ class InsuranceContract(models.Model):
         verbose_name="فایل قرارداد بیمه",
     )
 
-    start_date = jmodels.jDateField(
+    coverage_start_date = jmodels.jDateField(
         verbose_name="تاریخ شروع پوشش",
     )
 
-    end_date = jmodels.jDateField(
+    coverage_end_date = jmodels.jDateField(
         verbose_name="تاریخ پایان پوشش",
+    )
+
+    signup_start_date = jmodels.jDateField(
+        verbose_name="تاریخ شروع ثبت نام",
+    )
+
+    signup_end_date = jmodels.jDateField(
+        verbose_name="تاریخ پایان ثبت نام",
+    )
+
+    poll_start_date = jmodels.jDateField(
+        verbose_name="تاریخ شروع نظرسنجی",
+    )
+
+    poll_end_date = jmodels.jDateField(
+        verbose_name="تاریخ پایان نظرسنجی",
     )
 
     created_at = jmodels.jDateTimeField(
@@ -48,7 +64,7 @@ class InsuranceContract(models.Model):
                 name="unique_insurance_contract_year",
             ),
             models.CheckConstraint(
-                condition=models.Q(end_date__gte=models.F("start_date")),
+                condition=models.Q(coverage_end_date__gte=models.F("coverage_start_date")),
                 name="contract_end_after_start",
             ),
         ]

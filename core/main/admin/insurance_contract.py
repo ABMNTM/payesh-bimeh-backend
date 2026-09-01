@@ -10,6 +10,4 @@ class InsuranceContractAdmin(admin.ModelAdmin):
         "id",
         "contract_year",
         "insurer_company",
-        "start_date",
-        "end_date",
     )

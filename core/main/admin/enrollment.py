@@ -12,5 +12,5 @@ class EnrollmentAdmin(admin.ModelAdmin):
         "id",
         "status",
         "guardian",
-        "contract",
+        "offer",
     )

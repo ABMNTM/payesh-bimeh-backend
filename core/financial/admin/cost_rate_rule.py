@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from main.models import CostRateRule
+from financial.models import CostRateRule
 
 
 @admin.register(CostRateRule)
@@ -8,9 +8,9 @@ class CostRateRuleAdmin(admin.ModelAdmin):
 
     list_display = (
         "id",
-        "contract",
+        "offer",
         "employment_type",
         "cost_type",
-        "subsidy_percent",
+        "organ_share_percent",
         "base_premium_cost",
     )

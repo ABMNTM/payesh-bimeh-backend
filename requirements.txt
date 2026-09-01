@@ -6,4 +6,5 @@ django-bootstrap5==26.2
 django-cors-headers==4.9.0
 django_jalali==7.4.0
 django-storages==1.14.6
+json-logic==0.6.3
 python-decouple==3.8

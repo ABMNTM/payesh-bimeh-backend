@@ -19,11 +19,11 @@ class Enrollment(models.Model):
         verbose_name="کاربر",
     )
 
-    contract = models.ForeignKey(
-        "main.InsuranceContract",
+    offer = models.ForeignKey(
+        "main.InsuranceOffer",
         models.CASCADE,
         related_name="enrollments",
-        verbose_name="قرارداد بیمه سالانه",
+        verbose_name="پیشنهاد بیمه سالانه",
     )
 
     covered_members = models.ManyToManyField(

@@ -40,6 +40,11 @@ class Transaction(models.Model):
     def __str__(self):
         return self.authority
 
+    class Meta:
+        verbose_name = "تراکنش بانکی"
+        verbose_name_plural = "تراکنش های بانکی"
+    
+
     def payment_request(self):
         response = Payment(self.amount).request()
         self.authority = response.get("authority")

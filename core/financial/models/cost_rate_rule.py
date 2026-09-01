@@ -1,15 +1,17 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+from django_jalali.db import models as jmodels
+
 from main.types import SubsidyRateType
 
 
 class CostRateRule(models.Model):
-    contract = models.ForeignKey(
-        "main.InsuranceContract",
+    offer = models.ForeignKey(
+        "main.InsuranceOffer",
         models.CASCADE,
         related_name="rate_rules",
-        verbose_name="قرارداد بیمه سالانه",
+        verbose_name="پیشنهاد بیمه سالانه",
     )
 
     employment_type = models.ForeignKey(
@@ -24,19 +26,22 @@ class CostRateRule(models.Model):
         verbose_name="نوع رابطه برای محاسبه قیمت",
     )
 
-    subsidy_percent = models.FloatField(
+    organ_share_percent = models.FloatField(
         default=0,
         validators=[
             MinValueValidator(0, "حداقل درصد یارانه، صفر درصد است."),
             MaxValueValidator(100, "حداکثر درصد یارانه، 100 درصد است."),
         ],
-        verbose_name="درصد تخفیف یارانه",
+        verbose_name="درصد سهم سازمان (یارانه)",
     )
 
     base_premium_cost = models.PositiveBigIntegerField(
         default=0,
-        verbose_name="هزینه پایه بابت بیمه",
+        verbose_name="هزینه پایه بیمه",
     )
+
+    created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name="زمان ساخت")
+    updated_at = jmodels.jDateTimeField(auto_now=True, verbose_name="زمان بروزرسانی")
 
     class Meta:
         verbose_name = "قانون هزینه و یارانه بیمه"
