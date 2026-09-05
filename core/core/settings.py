@@ -96,7 +96,8 @@ STORAGES = {
         "BACKEND": "core.storage.MediaStorage",
     },
     "staticfiles": {
-        "BACKEND": "core.storage.StaticStorage",
+        # "BACKEND": "core.storage.StaticStorage",
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
     },
 }
 
@@ -104,7 +105,9 @@ AWS_S3_CLIENT_CONFIG = AWSConfig(
     connect_timeout=10, read_timeout=30, retries={"max_attempts": 3}
 )
 
-STATIC_URL = f"{AWS_STATIC_BUCKET_NAME}.{AWS_S3_STORAGE_URL}/"
+# STATIC_URL = f"{AWS_STATIC_BUCKET_NAME}.{AWS_S3_STORAGE_URL}/"
+STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # django jalali default settings

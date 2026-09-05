@@ -1,4 +1,5 @@
 {% load django_bootstrap5 %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,13 +9,12 @@
         {% bootstrap_css %}
         {% bootstrap_javascript %}
         <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
-        <style>
-            body {
-                font-family: 'Vazirmatn', sans-serif;
-            }
-        </style>
+        <link rel="stylesheet" href="{% static "css/base.css" %}">
+        {% block head %}
+        {% endblock %}
     <body>
         {% block content %}{% endblock %}
         {% include "messages.html" %}
     </body>
+    {% block scripts %}{% endblock %}
 </html>

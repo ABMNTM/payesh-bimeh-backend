@@ -10,11 +10,12 @@
     {% for enrollment in enrollments %}
     <div class="d-flex flex-column align-items-stretch card col-3 m-1 border-dark">
         <div class="card-body">
-            <p>قرارداد بیمه ({{ enrollment.contract.contract_year }})</p>
-            <p>شرکت متولی: {{ enrollment.contract.insurer_company }}</p>
+            <p>قرارداد بیمه ({{ enrollment.offer.contract.contract_year }})</p>
+            <p>سطح بیمه: {{ enrollment.offer.title }}</p>
+            <p>شرکت متولی: {{ enrollment.offer.contract.insurer_company }}</p>
             <div class="d-flex flex-column align-items-between gap-1">
-                <p class="p-1 mb-1 border border-success rounded">تاریخ شروع پوشش: {{ enrollment.contract.start_date|jformat:'%Y/%m/%d' }}</p>
-                <p class="p-1 mb-0 border border-danger rounded">تاریخ پایان پوشش: {{ enrollment.contract.end_date|jformat:'%Y/%m/%d' }}</p>
+                <p class="p-1 mb-1 border border-success rounded">تاریخ شروع پوشش: {{ enrollment.offer.contract.coverage_start_date|jformat:'%Y/%m/%d' }}</p>
+                <p class="p-1 mb-0 border border-danger rounded">تاریخ پایان پوشش: {{ enrollment.offer.contract.coverage_end_date|jformat:'%Y/%m/%d' }}</p>
             </div>
         </div>
     </div>

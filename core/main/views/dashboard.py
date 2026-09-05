@@ -9,7 +9,7 @@ class DashboardView(LoginRequiredMixin, View):
     redirect_field_name = "redirect_to"
 
     def get(self, request):
-        queryset = Enrollment.objects.select_related("contract").filter(
+        queryset = Enrollment.objects.select_related("offer", "offer__contract").filter(
             guardian=request.user
         )
         return render(request, "pages/dashboard.html", {"enrollments": queryset})

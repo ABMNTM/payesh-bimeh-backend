@@ -1,0 +1,16 @@
+{% extends "base_nav.html" %}
+{% load static %}
+{% block title %}افزودن فرد جدید{% endblock title %}
+{% block head %}
+<link rel="stylesheet" href="{% static "css/persons.css" %}">
+{% endblock %}
+{% block dashboard_content %}
+<form class="page" action="" method="post">
+    <h3>افزودن عضو خانوار جدید</h3>
+    {% csrf_token %}
+    {% include "components/bootstrap_form.html" with form=form %}
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">ذخیره</button>
+    </div>
+</form>
+{% endblock dashboard_content %}

@@ -1,0 +1,12 @@
+body {
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.main-content {
+    max-height: 80vh;
+    overflow-y: scroll;
+}
+
+.page {
+    margin: 0 75px;
+}

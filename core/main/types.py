@@ -25,3 +25,12 @@ class EnrollmentStatus(models.TextChoices):
     PENDING = "P", "در انتظار پرداخت"
     SUBMITTED = "S", "ارسال شده"
     CONFIRMED = "C", "تایید شده"
+
+
+class VeteranStatus(models.TextChoices):
+    VETERAN = "V", "ایثارگر"
+    DISABLED = "D", "جانباز"
+    MARTYR_SPOUSE = "S", "همسر شهید"
+    MARTYR_CHILD = "C", "فرزند شهید"
+    FORMER_POW  = "F", "آزاده"
+    NONE = "N", "ندارد"

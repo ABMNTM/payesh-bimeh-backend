@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django_jalali.db import models as jmodels
 
-from main.types import Gender
+from main.types import Gender, VeteranStatus
 
 
 class Person(models.Model):
@@ -51,10 +51,32 @@ class Person(models.Model):
         verbose_name="تاریخ تولد",
     )
 
+    birth_year = models.PositiveSmallIntegerField(
+        verbose_name="سال تولد"
+    )
+
+    birth_month = models.PositiveSmallIntegerField(
+        verbose_name="ماه تولد"
+    )
+
+    birth_day = models.PositiveSmallIntegerField(
+        verbose_name="روز تولد"
+    )
+
     birth_place = models.CharField(
         max_length=150,
         blank=True,
         verbose_name="محل تولد",
+    )
+
+    bc_issuance_place = models.CharField(
+        max_length=255,
+        verbose_name="محل صدور شناسنامه"
+    )
+
+    bc_issuance_province = models.CharField(
+        max_length=255,
+        verbose_name="استان محل صدور شناسنامه"
     )
 
     gender = models.CharField(
@@ -113,12 +135,99 @@ class Person(models.Model):
         verbose_name="کد پستی",
     )
 
+    deployed_unit = models.CharField(
+        max_length=255,
+        verbose_name="واحد مستقر"
+    )
+
+    organizational_unit = models.CharField(
+        max_length=255,
+        verbose_name="واحد سازمانی"
+    )
+
+    veteran_status = models.CharField(
+        max_length=1,
+        choices=VeteranStatus.choices,
+        verbose_name="وضعیت ایثارگری"
+    )
+
+    account_number = models.CharField(
+        max_length=20,
+        verbose_name="شماره حساب"
+    )
+
+    iba_number = models.CharField(
+        max_length=30,
+        verbose_name="شماره شبا"
+    )
+
+    card_number = models.CharField(
+        max_length=16,
+        verbose_name="شماره کارت"
+    )
+
+    description = models.TextField(
+        blank=True,
+        verbose_name="توضیحات"
+    )
+
+    extra_text_5 = models.TextField(
+        blank=True,
+        verbose_name="متن اضافه 5"
+    )
+
+    extra_text_6 = models.TextField(
+        blank=True,
+        verbose_name="متن اضافه 6"
+    )
+
+    extra_text_7 = models.TextField(
+        blank=True,
+        verbose_name="متن اضافه 7"
+    )
+
+    extra_text_8 = models.TextField(
+        blank=True,
+        verbose_name="متن اضافه 8"
+    )
+
+    extra_text_9 = models.TextField(
+        blank=True,
+        verbose_name="متن اضافه 9"
+    )
+
+    post_title = models.CharField(
+        max_length=255,
+        verbose_name="عنوان پست"
+    )
+
+    tracking_code = models.CharField(
+        max_length=45,
+        verbose_name="کد رهگیری"
+    )
+
+    education_certificate = models.CharField(
+        max_length=255,
+        verbose_name="مدرک تحصیلی"
+    )
+
+    available_services = models.CharField(
+        max_length=1024,
+        verbose_name="خدمات قابل ارائه"
+    )
+
+    insured_computer_code = models.CharField(
+        max_length=54,
+        verbose_name="کد رایانه بیمه شده",
+    )
+
     # ------------------------------------------------------------------
     # تاریخچه ثبت
     # ------------------------------------------------------------------
 
-    created_at = jmodels.jDateTimeField(auto_now_add=True)
-    updated_at = jmodels.jDateTimeField(auto_now=True)
+    changes_count = models.PositiveIntegerField(default=0, verbose_name="تعداد تغییرات")
+    created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name="زمان ثبت")
+    updated_at = jmodels.jDateTimeField(auto_now=True, verbose_name="زمان آخرین تغییرات")
 
     class Meta:
         verbose_name = "فرد"
