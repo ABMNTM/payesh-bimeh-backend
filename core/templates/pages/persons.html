@@ -8,7 +8,7 @@
 <div class="accordion page" id="persons_accordion">
     <div class="accordion-item">
         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-            <button class="accordion-button bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+            <button class="accordion-button accordion-button-icon bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
                 اطلاعات سرپرست خانوار (شما)
             </button>
         </h2>
@@ -24,7 +24,7 @@
     {% for dependant in dependants %}
         <div class="accordion-item">
             <h2 class="accordion-header" id="panelsStayOpen-heading{{ dependant.id }}">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{ dependant.id }}" aria-expanded="false" aria-controls="panelsStayOpen-collapse{{ dependant.id }}">
+                <button class="accordion-button accordion-button-icon collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{ dependant.id }}" aria-expanded="false" aria-controls="panelsStayOpen-collapse{{ dependant.id }}">
                     اطلاعات {{ dependant.relation }} شما
                 </button>
             </h2>

@@ -4,7 +4,17 @@ body {
 
 .main-content {
     max-height: 80vh;
-    overflow-y: scroll;
+    overflow-y: auto;
+}
+
+.accordion-button-icon {
+    flex-direction: row-reverse;
+    justify-content: start;
+}
+
+.accordion-button-icon::after {
+    margin-right: 0;
+    margin-left: 0.5rem;
 }
 
 .page {
