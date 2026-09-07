@@ -19,7 +19,7 @@ class InsuranceOffer(models.Model):
     created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name="زمان ساخت")
 
     def __str__(self):
-        return f"{self.contract_id} - {self.title}"
+        return f"{self.contract.contract_year} - {self.title}"
 
     class Meta:
         verbose_name = "پیشنهاد بیمه (سطح بندی)"

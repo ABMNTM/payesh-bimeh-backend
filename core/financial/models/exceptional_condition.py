@@ -1,7 +1,10 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.exceptions import ValidationError
 
 from django_jalali.db import models as jmodels
+
+import json
 
 
 class ExceptionalCondition(models.Model):

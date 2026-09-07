@@ -9,3 +9,7 @@ class CurrentInsuranceContract(models.Model):
         blank=True,
         verbose_name="رکورد کنونی",
     )
+
+    @classmethod
+    def current(cls):
+        return cls.objects.first()

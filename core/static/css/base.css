@@ -10,3 +10,11 @@ body {
 .page {
     margin: 0 75px;
 }
+
+.page-b {
+    margin: 0 200px;
+}
+
+.center {
+    margin: 0 auto;
+}

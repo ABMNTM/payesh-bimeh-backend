@@ -26,6 +26,10 @@ class Enrollment(models.Model):
         verbose_name="پیشنهاد بیمه سالانه",
     )
 
+    total_cost = models.PositiveBigIntegerField(
+        verbose_name="هزینه نهایی"
+    )
+
     covered_members = models.ManyToManyField(
         "main.Person", related_name="enrollments", verbose_name="افراد تحت پوشش"
     )

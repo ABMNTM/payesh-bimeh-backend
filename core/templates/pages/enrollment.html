@@ -1,0 +1,41 @@
+{% extends "base_nav.html" %}
+{% load static %}
+{% block title %}ثبت نام اصلی{% endblock title %}
+{% block head %}
+<link rel="stylesheet" href="{% static "css/enrollment.css" %}">
+{% endblock %}
+{% block dashboard_content %}
+    {% if contract_exists %}
+        <form class="page row" id="enroll-form" action="" method="post">
+            {% csrf_token %}
+            <h3 class="text-center mb-5">ثبت نام قرارداد بیمه جدید</h3>
+            <div class="form-group col-6">
+                <label for="covered_members">افراد انتخاب شده:</label>
+                <select class="form-control form-select" name="covered_members" id="covered_members" multiple>
+                    {% for dependant in dependants %}
+                        <option value="{{ dependant.id }}">{{dependant.first_name}} {{dependant.last_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-6">
+                <label for="offer">نوع بیمه:</label>
+                <select name="offer" id="offer" class="form-control form-select">
+                    {% for offer in current_offers %}
+                        <option value="{{ offer.id }}">{{ offer.title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-outline-primary mt-4">ارسال اطلاعات</button>
+        </form>
+        {% include "components/confirmation_modal.html" %}
+    {% else %}
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="alert alert-warning text-center">
+                در حال حاضر، قرارداد بیمه ای آماده ثبت نام شما وجود ندارد. در صورت لزوم، با پشتیبانی تماس حاصل فرمایید.
+            </div>
+        </div>
+    {% endif %}
+{% endblock dashboard_content %}
+{% block scripts %}
+<script src="{% static "js/enroll.js" %}"></script>
+{% endblock %}
