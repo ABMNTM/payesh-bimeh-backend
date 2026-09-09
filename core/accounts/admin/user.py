@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.html import format_html
 
 from accounts.models import User
-from main.models import Person
+from core.settings import ORGANIZATION_SERVICE_MAX_YEAR
 
 
 @admin.register(User)
@@ -79,6 +79,12 @@ class UserAdmin(BaseUserAdmin):
                 "fields": (
                     "person",
                     "email",
+                    "birth_year",
+                    "birth_month",
+                    "birth_day",
+                    "birth_place",
+                    "bc_issuance_place",
+                    "gender",
                 ),
             },
         ),
@@ -86,11 +92,37 @@ class UserAdmin(BaseUserAdmin):
             "اطلاعات استخدامی",
             {
                 "fields": (
-                    "employment_type",
                     (
-                        "employment_start_date",
-                        "employment_end_date",
+                        "employment_type",
+                        "organization_enter_year",
+                        "organizational_unit",
+                        "veteran_status",
                     ),
+                    (
+                        "phone_number",
+                        "landline_number",
+                        "address",
+                        "postal_code",
+                        "post_title",
+                        "education_certificate",
+                    ),
+                    (
+                        "account_number",
+                        "iba_number",
+                        "card_number",
+                    ),
+                    (
+                        "description",
+                        "extra_text_5",
+                        "extra_text_6",
+                        "extra_text_7",
+                        "extra_text_8",
+                        "extra_text_9",
+                    ),
+                    (
+                        "available_services",
+                        "insured_computer_code"
+                    )
                 ),
             },
         ),
@@ -111,6 +143,7 @@ class UserAdmin(BaseUserAdmin):
             {
                 "fields": (
                     "last_login",
+                    "changes_count",
                     "date_joined",
                 ),
                 "classes": ("collapse",),
@@ -151,8 +184,7 @@ class UserAdmin(BaseUserAdmin):
                     "employment_type",
                     "personnel_code",
                     (
-                        "employment_start_date",
-                        "employment_end_date",
+                        "organization_enter_year",
                     ),
                 ),
             },
@@ -188,19 +220,18 @@ class UserAdmin(BaseUserAdmin):
         description="وضعیت استخدام",
     )
     def employment_status(self, obj):
-        if (
-            obj.employment_end_date
-            and obj.employment_end_date < obj.employment_start_date
-            if obj.employment_start_date
-            else False
-        ):
-            return format_html('<span style="color:#d32f2f;">نامعتبر</span>')
+        from jdatetime import date
 
-        if obj.employment_end_date:
-            return format_html('<span style="color:#d97706;">پایان یافته</span>')
+        if not obj.organization_enter_year:
+            return format_html('<span style="color:#d3dcf9;">داده یافت نشد</span>')
+
+        current_year = date.today().year
+        end_year = obj.organization_enter_year + ORGANIZATION_SERVICE_MAX_YEAR
+
+        if current_year >= end_year:
+            return format_html('<span style="color:#d32f2f;">پایان یافته</span>')
 
         return format_html('<span style="color:#15803d;">فعال</span>')
-
     # ------------------------------------------------------------------
     # Queryset
     # ------------------------------------------------------------------

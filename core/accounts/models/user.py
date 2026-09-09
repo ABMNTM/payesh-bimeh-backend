@@ -34,9 +34,7 @@ class User(AbstractUser):
         verbose_name="شماره پرسنلی",
     )
 
-    organization_enter_year = jmodels.jDateField(
-        null=True,
-        blank=True,
+    organization_enter_year = models.PositiveSmallIntegerField(
         verbose_name="سال ورود به سازمان",
     )
 
@@ -63,21 +61,11 @@ class User(AbstractUser):
         verbose_name="محل صدور شناسنامه"
     )
 
-    bc_issuance_province = models.CharField(
-        max_length=255,
-        verbose_name="استان محل صدور شناسنامه"
-    )
-
     gender = models.CharField(
         max_length=1,
         choices=Gender.choices,
         verbose_name="جنسیت",
     )
-
-    
-    # ------------------------------------------------------------------
-    # اطلاعات تکمیلی مورد استفاده در فرآیندهای بیمه
-    # ------------------------------------------------------------------
 
     phone_number = models.CharField(
         max_length=20,
@@ -86,6 +74,7 @@ class User(AbstractUser):
 
     landline_number = models.CharField(
         max_length=20,
+        null=True,
         blank=True,
         verbose_name="شماره تلفن ثابت",
     )
@@ -97,11 +86,14 @@ class User(AbstractUser):
 
     postal_code = models.CharField(
         max_length=10,
+        null=True,
         blank=True,
         verbose_name="کد پستی",
     )
 
     organizational_unit = models.CharField(
+        null=True,
+        blank=True,
         max_length=255,
         verbose_name="واحد سازمانی"
     )
@@ -113,17 +105,23 @@ class User(AbstractUser):
     )
 
     account_number = models.CharField(
+        null=True,
+        blank=True,
         max_length=20,
         verbose_name="شماره حساب"
     )
 
     iba_number = models.CharField(
+        null=True,
+        blank=True,
         max_length=30,
         verbose_name="شماره شبا"
     )
 
     card_number = models.CharField(
         max_length=16,
+        null=True,
+        blank=True,
         verbose_name="شماره کارت"
     )
 
@@ -159,21 +157,29 @@ class User(AbstractUser):
 
     post_title = models.CharField(
         max_length=255,
+        null=True,
+        blank=True,
         verbose_name="عنوان پست"
     )
 
     education_certificate = models.CharField(
         max_length=255,
+        null=True,
+        blank=True,
         verbose_name="مدرک تحصیلی"
     )
 
     available_services = models.CharField(
         max_length=1024,
+        null=True,
+        blank=True,
         verbose_name="خدمات قابل ارائه"
     )
 
     insured_computer_code = models.CharField(
         max_length=54,
+        null=True,
+        blank=True,
         verbose_name="کد رایانه بیمه شده",
     )
 
@@ -186,21 +192,15 @@ class User(AbstractUser):
 
     objects = UserManager()
 
+    def save(self, *args, **kwargs):
+        self.changes_count += 1
+        return super().save(*args, **kwargs)
+
     def clean(self):
         errors = {}
 
         if not self.person.is_household_head:
             errors["person"] = "فرد باید سرپرست خانوار باشد."
-
-        # تاریخ پایان نباید قبل از شروع باشد.
-        if (
-            self.employment_start_date
-            and self.employment_end_date
-            and self.employment_end_date < self.employment_start_date
-        ):
-            errors["employment_end_date"] = (
-                "تاریخ پایان استخدام نمی‌تواند قبل از تاریخ شروع باشد."
-            )
 
         if errors:
             raise ValidationError(errors)

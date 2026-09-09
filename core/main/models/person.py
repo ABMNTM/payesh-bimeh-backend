@@ -1,9 +1,8 @@
 from django.db import models
-from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django_jalali.db import models as jmodels
 
-from main.types import Gender, VeteranStatus
+from main.types import RelationshipType
 
 
 class Person(models.Model):
@@ -62,6 +61,14 @@ class Person(models.Model):
         verbose_name="سرپرست",
     )
 
+    relation_type = models.CharField(
+        max_length=1,
+        null=True,
+        blank=True,
+        choices=RelationshipType.choices,
+        verbose_name="نسبت با سرپرست"
+    )
+
     tracking_code = models.CharField(
         max_length=45,
         verbose_name="کد رهگیری"
@@ -78,8 +85,16 @@ class Person(models.Model):
             # یک فرد یا سرپرست خانوار است یا زیرمجموعه یک خانوار
             models.CheckConstraint(
                 condition=(
-                    Q(is_household_head=True, household__isnull=True)
-                    | Q(is_household_head=False, household__isnull=False)
+                    Q(
+                        is_household_head=True,
+                        household__isnull=True,
+                        relation_type__isnull=True,
+                    )
+                    | Q(
+                        is_household_head=False,
+                        household__isnull=False,
+                        relation_type__isnull=False,
+                    )
                 ),
                 name="valid_household_assignment",
             ),

@@ -18,6 +18,5 @@ class PersonAdmin(admin.ModelAdmin):
         "first_name",
         "last_name",
         "national_code",
-        "gender",
         "is_household_head",
     )

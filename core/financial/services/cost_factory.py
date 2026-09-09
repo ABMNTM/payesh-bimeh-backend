@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 
 from accounts.models.user import User
 from financial.models import CostRateRule, ExceptionalCondition
-from main.models import Enrollment, FamilyRelationship, CurrentInsuranceContract, Person
+from main.models import CurrentInsuranceContract, Person
 from main.types import SubsidyRateType, Gender, VeteranStatus
 
 
@@ -110,11 +110,7 @@ class CostFactory:
         total_cost = Decimal("0")
         employment_type_id = guardian.employment_type.id
         household_head_person = guardian.person
-        all_covered_members = members.select_related("household").annotate(
-            relationship=Subquery(FamilyRelationship.objects.filter(
-                related_person=household_head_person, person_id=OuterRef("pk")
-            ).values("relationship_type"))
-        )
+        all_covered_members = members.select_related("household")
         total_cost += self.get_person_cost(
             household_head_person, employment_type_id, is_household=True
         )

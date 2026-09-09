@@ -18,8 +18,6 @@ class PersonForm(BootstrapModelForm):
 
 
 class CreatePersonForm(BootstrapModelForm):
-    relationship = forms.ChoiceField(choices=RelationshipType.choices, label="رابطه با شما:")
-
     class Meta:
         model = Person
         exclude = ("is_household_head", "household")

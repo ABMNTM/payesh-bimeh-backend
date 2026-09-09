@@ -9,7 +9,8 @@ class Gender(models.TextChoices):
 class RelationshipType(models.TextChoices):
     FATHER = "F", "پدر"
     MOTHER = "M", "مادر"
-    CHILD = "C", "فرزند"
+    S_CHILD = "C", "فرزند پسر"
+    D_CHILD = "D", "فرزند دختر"
     SPOUSE = "S", "همسر"
 
 
