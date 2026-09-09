@@ -7,6 +7,7 @@
 {% block dashboard_content %}
 <form class="page" action="" method="post">
     <h3>افزودن عضو خانوار جدید</h3>
+    <hr class="bg-success border-2 border-top border-success">
     {% csrf_token %}
     {% include "components/bootstrap_form.html" with form=form %}
     <div class="form-group">

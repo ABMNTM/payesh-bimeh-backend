@@ -22,6 +22,7 @@ from django.urls import path
 
 from accounts.views.login import LoginView
 from accounts.views.logout import LogoutView
+from accounts.views.profile import ProfileView
 from main.views.enrollment import EnrollmentView, SeePriceView
 from main.views.persons import PersonsView, CreatePersonView, UpdatePersonsView
 from main.views.dashboard import DashboardView
@@ -39,5 +40,7 @@ urlpatterns = [
     path("persons/<int:pk>/update", UpdatePersonsView.as_view(), name="update_person"),
 
     path("enroll/", EnrollmentView.as_view(), name="enroll"),
-    path("enroll/<int:pk>/see-price/", SeePriceView.as_view(), name="see_price")
+    path("enroll/<int:pk>/see-price/", SeePriceView.as_view(), name="see_price"),
+
+    path("profile/", ProfileView.as_view(), name="profile")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

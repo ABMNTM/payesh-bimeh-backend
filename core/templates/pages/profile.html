@@ -1,17 +1,17 @@
 {% extends "base_nav.html" %}
 {% load static %}
-{% block title %}تغییرات فرد موردنظر{% endblock title %}
+{% block title %}مشاهده و تغییر پروفایل شخصی{% endblock title %}
 {% block head %}
-<link rel="stylesheet" href="{% static "css/persons.css" %}">
+<link rel="stylesheet" href="{% static "css/profile.css" %}">
 {% endblock %}
 {% block dashboard_content %}
 <form class="page" action="" method="post">
-    <h3>تغییر عضو خانوار</h3>
+    <h3 class="mb-4">مشاهده و تغییر پروفایل شخصی</h3>
     <hr class="bg-success border-2 border-top border-success">
     {% csrf_token %}
     {% include "components/bootstrap_form.html" with form=form %}
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">ذخیره</button>
+        <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
     </div>
 </form>
 {% endblock dashboard_content %}

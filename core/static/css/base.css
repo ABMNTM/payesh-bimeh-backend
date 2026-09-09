@@ -2,6 +2,14 @@ body {
     font-family: 'Vazirmatn', sans-serif;
 }
 
+hr {
+    margin: 1rem 0;
+    color: inherit;
+    background-color: currentColor;
+    border: 0;
+    opacity: 0.25;
+}
+
 .main-content {
     max-height: 80vh;
     overflow-y: auto;

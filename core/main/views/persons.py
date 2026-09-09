@@ -1,6 +1,4 @@
-from django.core.exceptions import ValidationError
 from django.contrib import messages
-from django.db.models import OuterRef
 from django.db import IntegrityError, transaction
 
 from django.views import View
@@ -43,7 +41,6 @@ class CreatePersonView(LoginRequiredMixin, View):
 
     def get(self, request):
         form = CreatePersonForm()
-        form.fields.get("relationship").error_messages
         return render(request, "pages/create_person.html", {"form": form})
 
     @transaction.atomic
