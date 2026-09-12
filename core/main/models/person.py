@@ -1,8 +1,9 @@
 from django.db import models
 from django.db.models import Q
 from django_jalali.db import models as jmodels
+import jdatetime
 
-from main.types import RelationshipType
+from main.types import EducationalCertificates, RelationshipType
 
 
 class Person(models.Model):
@@ -27,8 +28,6 @@ class Person(models.Model):
     )
 
     birth_date = jmodels.jDateField(
-        null=True,
-        blank=True,
         verbose_name="تاریخ تولد",
     )
 
@@ -74,8 +73,24 @@ class Person(models.Model):
         verbose_name="کد رهگیری"
     )
 
+    educational_certificate = models.CharField(
+        max_length=1, choices=EducationalCertificates.choices, verbose_name="آخرین مدرک تحصیلی"
+    )
+
+    edu_in_progress = models.BooleanField(default=True, verbose_name="در حال تحصیل؟")
+
+    is_married = models.BooleanField(default=False, verbose_name="ازدواج کرده؟")
+
     created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name="زمان ثبت")
     updated_at = jmodels.jDateTimeField(auto_now=True, verbose_name="زمان آخرین تغییرات")
+
+    @property
+    def age(self):
+        reference_date = jdatetime.date.today()
+        age = reference_date.year - self.birth_date.year
+        if (reference_date.month, reference_date.day) < (self.birth_date.month, self.birth_date.day):
+            age -= 1
+        return age
 
     class Meta:
         verbose_name = "فرد"

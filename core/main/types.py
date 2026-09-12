@@ -35,3 +35,11 @@ class VeteranStatus(models.TextChoices):
     MARTYR_CHILD = "C", "فرزند شهید"
     FORMER_POW  = "F", "آزاده"
     NONE = "N", "ندارد"
+
+
+class EducationalCertificates(models.TextChoices):
+    UNDER_DIPLOMA = "U", "زیر دیپلم"
+    DIPLOMA = "D", "دیپلم"
+    BACHELOR = "B", "کارشناسی"
+    GRADUATE = "G", "کارشناسی ارشد"
+    DOCTORA = "C", "دکتری"

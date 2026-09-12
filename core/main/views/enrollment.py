@@ -3,7 +3,9 @@ from django.views import View
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone as tz
+import jdatetime
 
+from core.main.types import EducationalCertificates, RelationshipType
 from financial.services.cost_factory import calculate_total_cost
 
 from main.models import Enrollment, CurrentInsuranceContract
@@ -41,6 +43,30 @@ class EnrollmentView(LoginRequiredMixin, View):
             return "زمان ثبت نام به پایان رسیده است."
         return
 
+    def __check_for_childs(self, members):
+        for member in members:
+            if member.relation_type == RelationshipType.S_CHILD:
+                max_age = 20
+                if not member.edu_in_progress:
+                    max_age = 20
+                else:
+                    match member.educational_certificate:
+                        case EducationalCertificates.UNDER_DIPLOMA:
+                            max_age = 20
+                        case EducationalCertificates.DIPLOMA:
+                            max_age = 23
+                        case EducationalCertificates.BACHELOR:
+                            max_age = 25
+                        case EducationalCertificates.GRADUATE:
+                            max_age = 27
+                        case _:
+                            max_age = 20
+                if member.age >= max_age:
+                    return "کاربر {} {}، به دلیل سن بالاتر از حد مجاز، نمی تواند ثبت نام کند.".format(member.first_name, member.last_name)
+            if member.relation_type == RelationshipType.D_CHILD:
+                if member.is_married:
+                    return "کاربر {} {}، به دلیل تزویج نمی تواند ثبت نام کند.".format(member.first_name, member.last_name)
+
     def get(self, request):
         msg = self.__get_process_error()
         if not msg:
@@ -58,8 +84,17 @@ class EnrollmentView(LoginRequiredMixin, View):
         form.save_m2m()
 
     def post(self, request):
+        msg = self.__get_process_error()
+        if msg:
+            messages.error(request, msg)
+            return redirect("/dashboard")
         form = EnrollmentCreateForm(request.POST)
         if form.is_valid():
+            members = form.cleaned_data.get("covered_members")
+            msg = self.__check_for_childs(members)
+            if msg:
+                messages.error(request, msg)
+                return redirect("/enroll")
             self.create_enrollment(form)
             messages.success(request, "ثبت نام با موفقیت انجام شد.")
             return redirect("/dashboard")
