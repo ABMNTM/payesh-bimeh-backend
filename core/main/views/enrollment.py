@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.views import View
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils import timezone as tz
 
 from financial.services.cost_factory import calculate_total_cost
 
@@ -24,18 +25,25 @@ class EnrollmentView(LoginRequiredMixin, View):
         context["contract_exists"] = contract_exists
         return context
 
-    def preprocessing(self):
+    def __get_process_error(self):
         person_id = self.request.user.person_id
-        current_contract_id = CurrentInsuranceContract.current().contract_id
+        current_contract = CurrentInsuranceContract.current().contract
+        now = tz.now()
+        if not current_contract:
+            return "فعلا دوره بیمه ای برای ثبت نام وجود ندارد."
         if Enrollment.objects.filter(
-            guardian_id=person_id, offer__contract=current_contract_id
+            guardian_id=person_id, offer__contract=current_contract
         ).exists():
-            return False, "شما از پیش ثبت نام کرده اید."
-        return True, ""
+            return "شما از پیش ثبت نام کرده اید."
+        if current_contract.signup_start_date > now:
+            return "زمان ثبت نام فعلا آغاز نشده است."
+        if current_contract.signup_end_date < now:
+            return "زمان ثبت نام به پایان رسیده است."
+        return
 
     def get(self, request):
-        can_resume, msg = self.preprocessing()
-        if not can_resume:
+        msg = self.__get_process_error()
+        if not msg:
             messages.error(request, msg)
             return redirect("/dashboard")
         context = self.get_context_data()
