@@ -17,6 +17,8 @@ class UserProfileForm(BootstrapModelForm):
             "is_staff",
             "groups",
             "user_permissions",
+            "last_login",
+            "date_joined",
             "is_active",
             "person",
         )
