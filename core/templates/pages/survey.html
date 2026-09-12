@@ -1,0 +1,30 @@
+{% extends "base_nav.html" %}
+{% block title %}نظرسنجی{% endblock title %}
+{% block dashboard_content %}
+<form class="page" action="" method="post">
+    {% csrf_token %}
+    <ul class="list-group">
+        {% for question in questions %}
+            <li class="form-group list-group-item row">
+                <label for="{{question.id}}" class="col-6">{{ question.content }}</label>
+                <div class="btn-group col-5" role="group" aria-label="Basic radio toggle button group" dir="ltr">
+                    {% for choice in anschoices %}
+                        <input
+                            type="radio"
+                            class="btn-check"
+                            name="{{question.id}}"
+                            id="choice-{{ choice.id }}-{{ question.id }}"
+                            value="{{ choice.id }}"
+                            autocomplete="off"
+                        >
+                        <label class="btn btn-outline-primary" for="choice-{{ choice.id }}-{{ question.id }}">{{ choice.content }}</label>
+                    {% endfor %}
+                </div>
+            </li>
+        {% endfor %}
+        <li class="form-group list-group-item row">
+            <input type="submit" class="btn btn-outline-primary col-2" value="ارسال نظرسنجی">
+        </li>
+    </ul>
+</form>
+{% endblock dashboard_content %}

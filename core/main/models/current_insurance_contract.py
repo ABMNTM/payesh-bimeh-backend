@@ -12,4 +12,4 @@ class CurrentInsuranceContract(models.Model):
 
     @classmethod
     def current(cls):
-        return cls.objects.first()
+        return cls.objects.select_related("contract").last()

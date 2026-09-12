@@ -26,6 +26,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link {% if request.path|slice:"0:8" == "/survey/" %}bg-primary text-white{% else %}text-dark{% endif %} rounded" href="{% url 'survey' %}">
+                                <i class="bi bi-award icon"></i> نظرسنجی
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link {% if request.path|slice:"0:9" == "/persons/" %}bg-primary text-white{% else %}text-dark{% endif %} rounded" href="{% url 'persons' %}">
                                 <i class="bi bi-people icon"></i> افراد تحت تکفل
                             </a>
