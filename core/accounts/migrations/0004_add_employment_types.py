@@ -5,10 +5,12 @@ from django.db import migrations
 
 def add_employment_types(apps, schema_editor):
     EmploymentType = apps.get_model("main", "EmploymentType")
-    EmploymentType.objects.create(title="بازنشسته")
+    EmploymentType.objects.create(title="کارمند بازنشسته")
+    EmploymentType.objects.create(title="کارمند رسمی")
+    EmploymentType.objects.create(title="کارمند قراردادی")
+    EmploymentType.objects.create(title="کارمند پیمانی")
     EmploymentType.objects.create(title="هیات علمی")
-    EmploymentType.objects.create(title="کارمند")
-    EmploymentType.objects.create(title="کارمند شرکتی")
+    EmploymentType.objects.create(title="هیات علمی بازنشسته")
 
 
 class Migration(migrations.Migration):
