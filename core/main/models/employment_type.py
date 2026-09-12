@@ -12,3 +12,9 @@ class EmploymentType(models.Model):
     class Meta:
         verbose_name = "نوع استخدام"
         verbose_name_plural = "انواع استخدام"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["title"],
+                name="unique_employment_type_title",
+            )
+        ]
