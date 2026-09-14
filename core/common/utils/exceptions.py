@@ -1,0 +1,2 @@
+class ExcelParserError(Exception):
+    pass

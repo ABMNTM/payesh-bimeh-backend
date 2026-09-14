@@ -1,0 +1,74 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    &rsaquo; عملیات های ویژه
+</div>
+{% endblock %}
+
+{% block content_title %}<h1>خروجی اکسل</h1>{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module">
+        <form method="post" action="">
+            {% csrf_token %}
+            <fieldset class="module aligned">
+                <fieldset class="module aligned">
+                    <h2>انتخاب فیلدهای کارکنان</h2>
+                    <div class="select-actions">
+                        <button type="button" class="button" id="select-all-user">انتخاب همه</button>
+                        <button type="button" class="button" id="select-none-user">هیچ‌کدام</button>
+                    </div>
+                    <div class="field-grid">
+                        {% for user_field in all_user_fields %}
+                            <label class="field-checkbox field-checkbox-user">
+                                <input type="checkbox" name="user_field" id="{{ user_field.key }}" value="{{ user_field.key }}" checked>
+                                <span>{{ user_field.value }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+                <fieldset class="module aligned">
+                    <h2>انتخاب فیلدهای اشخاص</h2>
+                    <div class="select-actions">
+                        <button type="button" class="button" id="select-all-person">انتخاب همه</button>
+                        <button type="button" class="button" id="select-none-person">هیچ‌کدام</button>
+                    </div>
+                    <div class="field-grid">
+                        {% for person_field in all_person_fields %}
+                            <label class="field-checkbox field-checkbox-person">
+                                <input type="checkbox" name="person_field" id="{{ person_field.key }}" value="{{ person_field.key }}" checked>
+                                <span>{{ person_field.value }}</span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </fieldset>
+            
+            <div class="form-row">
+                <select name="contract" id="contract">
+                    {% for contract in contracts %}
+                        <option value="{{ contract.id }}"> قرارداد سال {{ contract.contract_year }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="submit-row">
+                <input type="submit" value="دانلود اکسل" class="default">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "css/admin/report.css" %}">
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src="{% static "js/admin/report.js" %}"></script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    &rsaquo; عملیات های ویژه
+</div>
+{% endblock %}
+
+{% block content_title %}<h1>ورودی اکسل</h1>{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module">
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="module aligned">
+                <h2>انتخاب فایل اکسل</h2>
+                <div class="field-grid">
+                    <label class="field-checkbox field-checkbox-user">
+                        <span>فایل موردنظر را انتخاب کنید:</span>
+                        <input type="file" name="excel_file">
+                    </label>
+                </div>
+            </fieldset>
+
+            <div class="submit-row">
+                <input type="submit" value="آپلود اکسل" class="default">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

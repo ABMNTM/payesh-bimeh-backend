@@ -10,8 +10,12 @@ from main.views.survey import SurveyView
 from main.views.enrollment import EnrollmentView, SeePriceView
 from main.views.persons import PersonsView, CreatePersonView, UpdatePersonsView
 from main.views.dashboard import DashboardView
+from main.views.report import ReportView
+from main.views.import_excel import ImportExcelView
 
 urlpatterns = [
+    path("admin/report/", ReportView.as_view(), name="report"),
+    path("admin/import-excel/", ImportExcelView.as_view(), name="import_excel"),
     path("admin/", admin.site.urls),
 
     path("login/", LoginView.as_view(), name="login"),
