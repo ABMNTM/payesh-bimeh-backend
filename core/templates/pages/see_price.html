@@ -22,9 +22,6 @@
             <label class="mb-3" for="price">هزینه بیمه:</label>
             <input type="text" value="{{object.total_cost}}" class="form-control" readonly>
         </div>
-        {% if object.status == "P" %}
-            <button type="button" class="col-3 btn btn-outline-primary mt-3 center">پرداخت</button>        
-        {% endif %}
     </div>
 {% endblock dashboard_content %}
 {% block scripts %}

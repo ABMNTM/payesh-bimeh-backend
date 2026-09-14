@@ -33,6 +33,13 @@ class MainConfig(AppConfig):
                             "view_only": True,
                             "perms": {"view": True, "add": False, "change": False, "delete": False},
                         },
+                        {
+                            "name": "ادغام دو فایل اکسل",
+                            "object_name": "custom_report",
+                            "admin_url": "/admin/merge-excel/",
+                            "view_only": True,
+                            "perms": {"view": True, "add": False, "change": False, "delete": False},
+                        },
                     ],
                 }
             ] + app_list

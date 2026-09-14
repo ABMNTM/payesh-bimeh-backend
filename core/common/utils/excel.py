@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 import numpy as np
 
 from io import BytesIO
@@ -105,7 +106,6 @@ all_person_fieldnames = (
 
 
 class ExcelToolKit:
-
     def export_to_excel(self, contract, user_fields: list[str], person_fields: list[str]):
         assert set(user_fields).issubset(set(all_user_fields)), "خطا: فیلد های کاربر باید معتبر باشند."
         assert set(person_fields).issubset(set(all_person_fields)), "خطا: فیلد های شخص باید معتبر باشند."
@@ -146,7 +146,6 @@ class ExcelToolKit:
             df.to_excel(writer, index=False, sheet_name=sheet_name)
 
             # Access the underlying openpyxl workbook and worksheet
-            workbook = writer.book
             worksheet = writer.sheets[sheet_name]
 
             # Define styles for Parents and Children
@@ -228,6 +227,37 @@ class ExcelToolKit:
                         raise Exception("نوع رکورد نامعتبر")
         except Exception as e:
             raise ExcelParserError(f"{e} در سطر {current_index}")
+
+    def merge_two_excels(self, first_file, second_file, key="national_code"):
+        first_df = pd.read_excel(first_file)
+        second_df = pd.read_excel(second_file)
+        final_df = pd.concat([first_df, second_df], ignore_index=True).drop_duplicates(
+            subset=['national_code']
+        )
+
+        buff = BytesIO()
+
+        with pd.ExcelWriter(buff, engine="openpyxl") as writer:
+            final_df.to_excel(writer, index=False, sheet_name=f"ادغام {first_file.name} و {second_file.name}")
+
+        response = HttpResponse(
+            buff.getvalue(),
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename="concated_report.xlsx"'
+
+        return response
+
+    def validate_excel_file(self, file):
+        ext = os.path.splitext(file.name)[1].lower()
+
+        if ext not in [".xlsx", ".xls"]:
+            return "فقط فایل‌های Excel با فرمت xlsx یا xls قابل قبول هستند."
+
+        try:
+            pd.read_excel(file)
+        except Exception:
+            return "فایل Excel معتبر نیست یا قابل خواندن نمی‌باشد."
 
     def get_employment_types(self):
         all_employment_types = EmploymentType.objects.all()

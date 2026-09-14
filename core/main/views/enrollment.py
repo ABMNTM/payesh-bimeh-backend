@@ -5,7 +5,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone as tz
 import jdatetime
 
-from main.models.employment_type import EmploymentType
 from core.settings import ORGANIZATION_SERVICE_MAX_YEAR
 from main.types import EducationalCertificates, RelationshipType
 from financial.services.cost_factory import calculate_total_cost
@@ -36,7 +35,7 @@ class EnrollmentView(LoginRequiredMixin, View):
         if not current_contract:
             return "فعلا دوره بیمه ای برای ثبت نام وجود ندارد."
         if Enrollment.objects.filter(
-            guardian_id=person_id, offer_contract=current_contract
+            guardian_id=person_id, offer__contract=current_contract
         ).exists():
             return "شما از پیش ثبت نام کرده اید."
         if current_contract.signup_start_date > now:
