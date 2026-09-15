@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.utils import timezone as tz
 
+from accounts.forms.login import CaptchaForm
 from main.models import Enrollment
 from main.types import EnrollmentStatus
 
@@ -12,7 +13,8 @@ class LoginView(View):
     def get(self, request):
         if self.request.user.is_authenticated:
             return redirect("/dashboard")
-        return render(request, "pages/login.html")
+        captcha_form = CaptchaForm()
+        return render(request, "pages/login.html", {"captcha_form": captcha_form})
 
     def handle_login_redirect(self, request):
         current_enrollment = Enrollment.objects.filter(
@@ -28,11 +30,13 @@ class LoginView(View):
     def post(self, request):
         personnel_code = request.POST.get("personnel_code")
         password = request.POST.get("password")
-        user = authenticate(request, personnel_code=personnel_code, password=password)
-        if user is not None:
-            login(request, user)
-            messages.success(request, "با موفقیت وارد شدید.")
-            return self.handle_login_redirect(request)
-        else:
-            messages.error(request, "کد پرسنلی یا رمز عبور نادرست است.")
-            return render(request, "pages/login.html")
+        form = CaptchaForm(request.POST)
+        if form.is_valid():
+            user = authenticate(request, personnel_code=personnel_code, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, "با موفقیت وارد شدید.")
+                return self.handle_login_redirect(request)
+            else:
+                messages.error(request, "کد پرسنلی یا رمز عبور نادرست است.")
+        return render(request, "pages/login.html", {"captcha_form": form})

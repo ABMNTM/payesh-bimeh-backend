@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from accounts.views.login import LoginView
 from accounts.views.logout import LogoutView
@@ -19,6 +19,7 @@ urlpatterns = [
     path("admin/import-excel/", ImportExcelView.as_view(), name="import_excel"),
     path("admin/merge-excel/", MergeExcelView.as_view(), name="merge_excel"),
     path("admin/", admin.site.urls),
+    path('captcha/', include('captcha.urls')),
 
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", LogoutView.as_view(), name="logout"),

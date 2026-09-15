@@ -1,5 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Login{% endblock%}
+{% load static %}
+
+{% block title %}ورود{% endblock%}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "css/login.css" %}">
+{% endblock %}
+
 {% block content%}
 <div class="d-flex align-items-center justify-content-center min-vh-100">
     <div class="container">
@@ -21,6 +28,19 @@
                                 </label>
                                 <input name="password" type="password" class="form-control" id="password" placeholder="رمز عبور را وارد کنید ..." required />
                             </div>
+                            <div class="row mb-3">
+                                <div class="input-group col-4">
+                                    {{ captcha_form.captcha }}
+                                    <button type="button" class="btn btn-outline-secondary" id="captcha-refresh" data-url="{{refresh_url}}" onclick="refreshCaptcha()">
+                                        <i class="bi bi-arrow-clockwise"></i>
+                                    </button>
+                                </div>
+                                {% if captcha_form.captcha.errors %}
+                                <div class="invalid-feedback d-block col-12">
+                                    {{ captcha_form.captcha.errors }}
+                                </div>
+                                {% endif %}
+                            </div>
                             <button type="submit" class="btn btn-info center">
                                 ورود
                             </button>
@@ -31,4 +51,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static "js/login.js" %}"></script>
 {% endblock %}

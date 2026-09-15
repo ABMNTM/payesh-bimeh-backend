@@ -5,6 +5,7 @@ djangorestframework-simplejwt==5.5.1
 django-bootstrap5==26.2
 django-cors-headers==4.9.0
 django_jalali==7.4.0
+django-simple-captcha==0.7.0
 django-storages==1.14.6
 json-logic-qubit==0.9.1
 openpyxl==3.1.5
