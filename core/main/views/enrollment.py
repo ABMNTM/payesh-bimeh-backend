@@ -30,7 +30,12 @@ class EnrollmentView(LoginRequiredMixin, View):
 
     def _get_process_error(self):
         person_id = self.request.user.person_id
-        current_contract = CurrentInsuranceContract.current().contract
+        if not person_id:
+            return "لطفا پیش از ثبت نام اطلاعات شخصی خود را از طریق صفحه افراد تحت تکفل تکمیل کنید."
+        current_contract = CurrentInsuranceContract.current()
+        if not current_contract:
+            return "خطا در دریافت قرارداد جاری بیمه: لطفا با پشتیبانی تماس بگیرید."
+        current_contract = current_contract.contract
         now = tz.now()
         if not current_contract:
             return "فعلا دوره بیمه ای برای ثبت نام وجود ندارد."

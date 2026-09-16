@@ -6,7 +6,7 @@ from main.models.employment_type import EmploymentType
 
 
 class UserManager(DjUserManager):
-    def create_superuser(self, personnel_code, email, password, **extra_fields):
+    def create_superuser(self, national_code, email, password, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
@@ -24,7 +24,7 @@ class UserManager(DjUserManager):
         email = self.normalize_email(email)
 
         user = User(
-            personnel_code=personnel_code,
+            national_code=national_code,
             employment_type=awesome_employment_type,
             email=email,
             **extra_fields

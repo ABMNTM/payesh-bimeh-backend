@@ -10,7 +10,6 @@ class PersonAdmin(admin.ModelAdmin):
         "first_name",
         "last_name",
         "national_code",
-        "personnel_code",
     )
 
     list_display = (

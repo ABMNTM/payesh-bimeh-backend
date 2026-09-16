@@ -16,7 +16,7 @@ from common.utils.exceptions import ExcelParserError
 
 all_user_fields = (
     "employment_type",
-    "personnel_code",
+    "national_code",
     "organization_enter_year",
     "birth_year",
     "birth_month",
@@ -47,7 +47,7 @@ all_user_fields = (
 
 all_user_fieldnames = (
     "نوع استخدام",
-    "شماره پرسنلی",
+    "کد ملی",
     "سال ورود به سازمان",
     "سال تولد",
     "ماه تولد",

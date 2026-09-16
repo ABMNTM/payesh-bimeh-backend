@@ -7,20 +7,26 @@
 {% block dashboard_content %}
 <div class="accordion page" id="persons_accordion">
     <div class="accordion-item">
-        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-            <button class="accordion-button accordion-button-icon bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                اطلاعات سرپرست خانوار (شما)
-            </button>
-        </h2>
-        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-            <div class="accordion-body">
-                <form method="post">
-                    {% include "components/bootstrap_form.html" with form=self_person.form %}
-                    <a href="{% url "update_person" self_person.id %}" type="button" class="btn btn-primary center">تغییر اطلاعات شخصی</a>
-                </form>
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button accordion-button-icon bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    اطلاعات سرپرست خانوار (شما)
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                    <form method="post">
+                        {% if self_person.person_exists %}
+                            {% include "components/bootstrap_form.html" with form=self_person.form %}
+                            <a href="{% url "update_person" self_person.id %}" type="button" class="btn btn-primary center">تغییر اطلاعات شخصی</a>
+                        {% else %}
+                            شما در حال حاضر، اطلاعات خود را جهت ثبت نام در بیمه تکمیل نکرده اید.
+
+                            لطفا جهت تکمیل اطلاعات خود به <a href="{% url "create_household_person" %}">این لینک</a> مراجعه کنید.
+                        {% endif %}
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
     {% for dependant in dependants %}
         <div class="accordion-item">
             <h2 class="accordion-header" id="panelsStayOpen-heading{{ dependant.id }}">
@@ -36,6 +42,8 @@
             </div>
         </div>
     {% endfor %}
-    <a href="{% url "create_person" %}" class="btn btn-outline-info col-4 mt-3">افزودن عضو جدید</a>
+    {% if self_person.person_exists %}
+        <a href="{% url "create_person" %}" class="btn btn-outline-info col-4 mt-3">افزودن عضو جدید</a>
+    {% endif %}
 </div>
 {% endblock dashboard_content %}

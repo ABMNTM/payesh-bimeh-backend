@@ -225,4 +225,4 @@ class User(AbstractUser):
             raise ValidationError(errors)
 
     def __str__(self):
-        return self.personnel_code
+        return self.national_code

@@ -21,3 +21,9 @@ class CreatePersonForm(BootstrapModelForm):
     class Meta:
         model = Person
         exclude = ("is_household_head", "household")
+
+
+class CreateHouseholdPersonForm(BootstrapModelForm):
+    class Meta:
+        model = Person
+        exclude = ("national_code", "household", "is_household_head", "relation_type")

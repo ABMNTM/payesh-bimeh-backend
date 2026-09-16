@@ -28,11 +28,11 @@ class LoginView(View):
         return redirect("/survey")
 
     def post(self, request):
-        personnel_code = request.POST.get("personnel_code")
+        national_code = request.POST.get("national_code")
         password = request.POST.get("password")
         form = CaptchaForm(request.POST)
         if form.is_valid():
-            user = authenticate(request, personnel_code=personnel_code, password=password)
+            user = authenticate(request, national_code=national_code, password=password)
             if user is not None:
                 login(request, user)
                 messages.success(request, "با موفقیت وارد شدید.")

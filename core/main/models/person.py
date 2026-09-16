@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django_jalali.db import models as jmodels
 import jdatetime
@@ -70,7 +71,8 @@ class Person(models.Model):
 
     tracking_code = models.CharField(
         max_length=45,
-        verbose_name="کد رهگیری"
+        verbose_name="کد رهگیری",
+        editable=False,
     )
 
     educational_certificate = models.CharField(
@@ -91,6 +93,11 @@ class Person(models.Model):
         if (reference_date.month, reference_date.day) < (self.birth_date.month, self.birth_date.day):
             age -= 1
         return age
+
+    def clean(self):
+        if self.is_household_head:
+            if self.national_code != self.user.national_code:
+                raise ValidationError("کدملی با کدملی ثبت شده مغایرت دارد.")
 
     class Meta:
         verbose_name = "فرد"
