@@ -11,8 +11,8 @@
 <div class="d-flex align-items-center justify-content-center min-vh-100">
     <div class="container">
         <div class="row justify-content-center align-items-center">
-            <div class="col-md-4 mb-5">
-                <div class="card">
+            <div class="col-md-4 mb-5 row">
+                <div class="card col-12">
                     <div class="card-body">
                         <form id="registrationForm" method="post" action="" class="d-flex flex-column gap-3" dir="rtl">
                             {% csrf_token %}
@@ -22,17 +22,17 @@
                                 </label>
                                 <input name="personnel_code" class="form-control" id="personnel-code" placeholder="کد پرسنلی را وارد کنید ..." required />
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="password" class="mb-1">
                                     رمز عبور
                                 </label>
                                 <input name="password" type="password" class="form-control" id="password" placeholder="رمز عبور را وارد کنید ..." required />
                             </div>
-                            <div class="row mb-3">
-                                <div class="input-group col-4">
+                            <div class="row mb-2">
+                                <div class="input-group col-4" dir="ltr">
                                     {{ captcha_form.captcha }}
                                     <button type="button" class="btn btn-outline-secondary" id="captcha-refresh" data-url="{{refresh_url}}" onclick="refreshCaptcha()">
-                                        <i class="bi bi-arrow-clockwise"></i>
+                                        <i class="bi bi-arrow-counterclockwise"></i>
                                     </button>
                                 </div>
                                 {% if captcha_form.captcha.errors %}
@@ -41,12 +41,15 @@
                                 </div>
                                 {% endif %}
                             </div>
-                            <button type="submit" class="btn btn-info center">
+                            <button type="submit" class="btn btn-primary center text-light">
                                 ورود
                             </button>
                         </form>
                     </div>
                 </div>
+                <a href="{% url 'oidc_authentication_init' %}" class="btn btn-outline-info mt-4 col-12">
+                    ورود با احراز هویت در سامانه مرکزی
+                </a>
             </div>
         </div>
     </div>

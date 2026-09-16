@@ -11,7 +11,7 @@ class User(AbstractUser):
     username = None
     first_name = None
     last_name = None
-    USERNAME_FIELD = "personnel_code"
+    USERNAME_FIELD = "national_code"
 
     person = models.OneToOneField(
         "main.Person",
@@ -24,51 +24,68 @@ class User(AbstractUser):
     employment_type = models.ForeignKey(
         "main.EmploymentType",
         models.CASCADE,
+        null=True,
+        blank=True,
         related_name="hired_users",
         verbose_name="نوع استخدام",
     )
 
-    personnel_code = models.CharField(
-        max_length=50,
+    national_code = models.CharField(
+        max_length=10,
         unique=True,
-        verbose_name="شماره پرسنلی",
+        verbose_name="کد ملی",
     )
 
     organization_enter_year = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
         verbose_name="سال ورود به سازمان",
     )
 
     birth_year = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
         verbose_name="سال تولد"
     )
 
     birth_month = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
         verbose_name="ماه تولد"
     )
 
     birth_day = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
         verbose_name="روز تولد"
     )
 
     birth_place = models.CharField(
         max_length=150,
+        null=True,
         blank=True,
         verbose_name="محل تولد",
     )
 
     bc_issuance_place = models.CharField(
+        null=True,
+        blank=True,
         max_length=255,
         verbose_name="محل صدور شناسنامه"
     )
 
     gender = models.CharField(
         max_length=1,
+        null=True,
+        blank=True,
         choices=Gender.choices,
         verbose_name="جنسیت",
     )
 
     phone_number = models.CharField(
         max_length=20,
+        null=True,
+        blank=True,
         verbose_name="شماره موبایل",
     )
 
@@ -100,6 +117,8 @@ class User(AbstractUser):
 
     veteran_status = models.CharField(
         max_length=1,
+        null=True,
+        blank=True,
         choices=VeteranStatus.choices,
         verbose_name="وضعیت ایثارگری"
     )

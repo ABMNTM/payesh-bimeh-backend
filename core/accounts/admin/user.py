@@ -18,7 +18,7 @@ class UserAdmin(BaseUserAdmin):
 
     list_display = (
         "person_display",
-        "personnel_code",
+        "national_code",
         "employment_type__title",
         "employment_status",
         "is_active",
@@ -41,7 +41,7 @@ class UserAdmin(BaseUserAdmin):
         "person__first_name",
         "person__last_name",
         "person__national_code",
-        "personnel_code",
+        "national_code",
     )
 
     ordering = (
@@ -68,7 +68,7 @@ class UserAdmin(BaseUserAdmin):
             "اطلاعات حساب کاربری",
             {
                 "fields": (
-                    "personnel_code",
+                    "national_code",
                     "password",
                 ),
             },
@@ -161,7 +161,7 @@ class UserAdmin(BaseUserAdmin):
             {
                 "classes": ("wide",),
                 "fields": (
-                    "personnel_code",
+                    "national_code",
                     "employment_type",
                     "password1",
                     "password2",
@@ -182,7 +182,7 @@ class UserAdmin(BaseUserAdmin):
             {
                 "fields": (
                     "employment_type",
-                    "personnel_code",
+                    "national_code",
                     (
                         "organization_enter_year",
                     ),

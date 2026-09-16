@@ -12,6 +12,6 @@ class CaptchaForm(forms.Form):
 
         self.fields["captcha"].widget.attrs.update({
             "class": "form-control",
-            "placeholder": "کد تصویر را وارد کنید",
+            "placeholder": "enter the Captcha ...",
             "autocomplete": "off",
         })

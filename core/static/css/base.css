@@ -36,3 +36,13 @@ hr {
 .center {
     margin: 0 auto;
 }
+
+.fixed-image {
+    position: fixed;
+    margin: 10px 0 0 10px;
+    top: 0;
+    left: 0;
+    width: 125px; /* اندازه دلخواه */
+    height: auto;
+    z-index: 1000;
+}

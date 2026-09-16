@@ -30,7 +30,7 @@ DEBUG = config("DEBUG", default=True, cast=bool)
 
 CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", default=[])
 CORS_ALLOW_ALL_ORIGINS = False
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default=["localhost"])
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default=["localhost", "192.168.132.137"])
 AUTH_USER_MODEL = "accounts.User"
 
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'mozilla_django_oidc',
     "django_bootstrap5",
     "django_jalali",
     "captcha",
@@ -62,6 +63,11 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'accounts.oidc.CustomOIDCAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 ROOT_URLCONF = "core.urls"
 
@@ -176,5 +182,33 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "payesh-bimeh",
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
+# OIDC
+OIDC_RP_CLIENT_ID = config("OIDC_RP_CLIENT_ID")
+OIDC_RP_CLIENT_SECRET = config("OIDC_RP_CLIENT_SECRET")
+
+OIDC_OP_HOST = config("OIDC_OP_HOST")
+OIDC_OP_AUTHORIZATION_ENDPOINT = f'{OIDC_OP_HOST}/realms/BASU/protocol/openid-connect/auth/'
+OIDC_OP_TOKEN_ENDPOINT = f'{OIDC_OP_HOST}/realms/BASU/protocol/openid-connect/token/'
+OIDC_OP_USER_ENDPOINT = f'{OIDC_OP_HOST}/realms/BASU/protocol/openid-connect/userinfo/'
+
+OIDC_RP_SIGN_ALGO = 'RS256'
+
+OIDC_OP_JWKS_ENDPOINT = f'{OIDC_OP_HOST}/realms/BASU/protocol/openid-connect/certs/'
+
+LOGIN_REDIRECT_URL = '/login/oidc/'
+LOGOUT_REDIRECT_URL = '/logout/'
+
+LOGIN_REDIRECT_URL_FAILURE = '/login/'
 
 ORGANIZATION_SERVICE_MAX_YEAR = 30

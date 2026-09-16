@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from accounts.views.login import LoginView
+from accounts.views.oidc_login import OIDCLoginView
 from accounts.views.logout import LogoutView
 from accounts.views.profile import ProfileView
 from main.views.survey import SurveyView
@@ -22,6 +23,7 @@ urlpatterns = [
     path('captcha/', include('captcha.urls')),
 
     path("login/", LoginView.as_view(), name="login"),
+    path("login/oidc/", OIDCLoginView.as_view(), name="oidc_login"),
     path("logout/", LogoutView.as_view(), name="logout"),
 
     path("dashboard/", DashboardView.as_view(), name="dashboard"),
@@ -36,4 +38,5 @@ urlpatterns = [
     path("profile/", ProfileView.as_view(), name="profile"),
 
     path("survey/", SurveyView.as_view(), name="survey"),
+    path('oidc/', include('mozilla_django_oidc.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
